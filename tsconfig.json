@@ -2,7 +2,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "esModuleInterop": true,
-    "target": "es2017",
+    "target": "ES5",
     "module": "commonjs",
     "strict": true,
     "noImplicitAny": false,
