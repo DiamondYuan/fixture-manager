@@ -1,5 +1,5 @@
 {
-  "name": "fixtures",
+  "name": "fixtures-manager",
   "version": "0.0.1",
   "main": "index.js",
   "repository": "git@github.com:DiamondYuan/fixture.git",
