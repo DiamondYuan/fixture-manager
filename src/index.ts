@@ -13,6 +13,6 @@ export interface IFixture {
   writeFile(path: string): Promise<void>;
 }
 
-export interface IFixtureManager {
-  getAll(): Promise<IFixture[]>;
+export interface IFixtureManager<T extends IFixture = IFixture> {
+  getFixtures(): Promise<T[]>;
 }
