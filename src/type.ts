@@ -22,7 +22,7 @@ export interface IFixtureManager<T extends IFixture = IFixture> {
 
   getFixtures(): Promise<T[]>;
 
-  get(name: string): Promise<T>;
+  // get(name: string): Promise<T>;
 }
 
 export interface IFixtureConstructor<T extends IFixture = IFixture> {
