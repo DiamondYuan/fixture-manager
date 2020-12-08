@@ -11,6 +11,7 @@ export interface IFixtureOptions {
 
 export interface IFixture {
   type: EFixtureType;
+  getId(): Promise<string>;
   readFile(path: string): Promise<string | null>;
   readJSON<T = any>(path: string): Promise<T | null>;
   writeJSON<T = any>(path: string, data: T): Promise<void>;
@@ -22,7 +23,7 @@ export interface IFixtureManager<T extends IFixture = IFixture> {
 
   getFixtures(): Promise<T[]>;
 
-  // get(name: string): Promise<T>;
+  get(id: string): Promise<T>;
 }
 
 export interface IFixtureConstructor<T extends IFixture = IFixture> {

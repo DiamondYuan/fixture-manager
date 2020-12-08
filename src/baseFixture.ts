@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, basename } from "path";
 import { IFixtureOptions, IFixture, EFixtureType } from "./type";
 import fs from "fs";
 import { promisify } from "util";
@@ -9,8 +9,12 @@ const writeFile = promisify(fs.writeFile);
 class BaseFixture implements IFixture {
   public type: EFixtureType;
 
-  constructor(private options: IFixtureOptions) {
+  constructor(protected options: IFixtureOptions) {
     this.type = this.options.type;
+  }
+
+  async getId() {
+    return basename(this.options.path);
   }
 
   async readFile(path: string): Promise<string | null> {

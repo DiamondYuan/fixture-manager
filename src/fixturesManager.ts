@@ -18,7 +18,7 @@ const SKIP_DIR_NAME = "__SKIP__";
 
 type TGetAllSubfolderFiler = (dirname: string) => boolean;
 
-export class FixtureManager<T extends IFixture = IFixture>
+class FixtureManager<T extends IFixture = IFixture>
   implements IFixtureManager<T> {
   constructor(private options: IFixtureManagerOptions) {}
 
@@ -42,15 +42,24 @@ export class FixtureManager<T extends IFixture = IFixture>
       );
       result = result.concat(shipFixtures);
     }
-    const defaultPaths = await this.getAllSubfolder(
-      this.options.path,
-      (e) => ![ONLY_DIR_NAME, SKIP_DIR_NAME].includes(e)
-    );
+    const defaultPaths = await this.getAllSubfolder(this.options.path, (e) => {
+      return ![ONLY_DIR_NAME, SKIP_DIR_NAME].includes(e);
+    });
     const defaultFixtures = defaultPaths.map(
       (path): T => this.getFixture(path, EFixtureType.skip)
     );
     result = result.concat(defaultFixtures);
     return result;
+  }
+
+  public async get(id: string) {
+    const fixtures = await this.getAllFixtures();
+    for (const fixture of fixtures) {
+      if ((await fixture.getId()) === id) {
+        return fixture;
+      }
+    }
+    throw new Error(`Fixture ${id} not exist.`);
   }
 
   public async getFixtures() {
@@ -101,14 +110,14 @@ export class FixtureManager<T extends IFixture = IFixture>
     path: string,
     filter?: TGetAllSubfolderFiler
   ): Promise<string[]> {
-    const folders = await readdir(path);
-    const files = folders.map((o) => join(this.options.path, o));
+    let folders = await readdir(path);
+    if (filter) {
+      folders = folders.filter(filter);
+    }
+    const files = folders.map((o) => join(path, o));
     const allFiles = await Promise.all(
       files.map(
         async (o): Promise<string | null> => {
-          if (filter && !filter(o)) {
-            return null;
-          }
           const fileStat = await stat(o);
           if (fileStat.isDirectory()) {
             return o;
@@ -120,3 +129,5 @@ export class FixtureManager<T extends IFixture = IFixture>
     return allFiles.filter((o): o is string => !!o);
   }
 }
+
+export { FixtureManager };
