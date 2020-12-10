@@ -1,6 +1,6 @@
 {
   "name": "fixture-manager",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "lib/index.js",
   "repository": "git@github.com:DiamondYuan/fixtures-manager.git",
   "author": "DiamondYuan <admin@diamondyuan.com>",
