@@ -1,3 +1,3 @@
 export { BaseFixture } from "./baseFixture";
-export { FixtureManager } from "./fixturesManager";
+export { FixtureManager } from "./fixtureManager";
 export * from "./type";
