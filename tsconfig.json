@@ -26,4 +26,5 @@
     "importHelpers": true,
     "outDir": "lib"
   },
+  "include": ["src"]
 }
